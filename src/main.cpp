@@ -21,10 +21,20 @@ int main()
         cout << "3. Search the book by Title " <<endl;
         cout << "4. Update the book by ID" << endl;
         cout << "5. Delete the book by Id "<< endl;
-        cout << "6. Exit " <<endl;
+        cout << "6. Issue Book" <<endl;
+        cout << "7. Return Book " <<endl;
+        cout << "8. Exit " <<endl;
 
         cout << "Enter your choice: ";
         cin >> choice;
+
+        if(cin.fail())
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input! Please enter a number." << endl;
+            continue;
+        }
 
         if(choice==1)
         {
@@ -150,7 +160,73 @@ int main()
                 }
             }
         }
-        else if(choice==6)
+
+        else if(choice ==6)
+        {
+            if(library.empty())
+            {
+                cout << "Sorry,No book in Library to issue"<<endl;
+                cout << "Come Later" <<endl;
+            }
+
+            else{
+                int issueId;
+                bool found = false;
+
+                cout << "Please enter the book Id : " <<endl;
+                cin>> issueId;
+
+                for(size_t i=0;i<library.size();i++)
+                {
+                    if(library[i].getID()==issueId)
+                    {
+                        library[i].issueBook();
+                        rewriteFile(library);
+                        found = true;
+                        break;
+                    }
+                }
+
+                if(!found)
+                {
+                    cout << "Book with givenID not found" <<endl;
+                }
+            }
+        }
+
+        else if(choice ==7)
+        {
+            if(library.empty())
+            {
+                cout << "Sorry,No book in Library to return"<<endl;
+                cout << "Come Later" <<endl;
+            }
+
+            else{
+                int returnId;
+                bool found = false;
+
+                cout << "Please enter the book Id : " <<endl;
+                cin>> returnId;
+
+                for(size_t i=0;i<library.size();i++)
+                {
+                    if(library[i].getID()==returnId)
+                    {
+                        library[i].returnBook();
+                        rewriteFile(library);
+                        found = true;
+                        break;
+                    }
+                }
+
+                if(!found)
+                {
+                    cout << "Book with givenID not found" <<endl;
+                }
+            }
+        }
+        else if(choice==8)
         {
             cout << "Exiting Library System........" <<endl;
             break;

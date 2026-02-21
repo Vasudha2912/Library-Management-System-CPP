@@ -9,6 +9,9 @@ class Book{
         int bookID;
         std::string bookTitle;
         std::string bookAuthor;
+        bool isIssued;
+        std::string issuedTo;
+        std::string issuedDate;
 
     public:
         void addBook();
@@ -19,6 +22,11 @@ class Book{
         void saveToFile();
         static void loadFromFile(std::vector<Book> &library);//used static because it will call before any obejct exists
         void updateBook();
+        void issueBook();
+        void returnBook();
+        bool getIssuedStatus() const;
+        std::string getIssuedTo() const;
+        std::string getIssuedDate() const;
 };
 
 #endif
