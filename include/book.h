@@ -18,6 +18,7 @@ class Book{
         std::string getAuthor() const;
         void saveToFile();
         static void loadFromFile(std::vector<Book> &library);//used static because it will call before any obejct exists
+        void updateBook();
 };
 
 #endif

@@ -94,9 +94,12 @@ void rewriteFile(const std::vector<Book> &library)
     outFile.close();
 }
 
+void Book::updateBook()
+{
+    cout << "Enter new Book Title: " <<endl;
+    cin.ignore();
+    getline(cin,bookTitle);
 
-
-
-
-
-
+    cout << "Enter new Book Author: " << endl;
+    getline(cin, bookAuthor);
+}

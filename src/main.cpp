@@ -19,8 +19,9 @@ int main()
         cout << "1. Add Book " << endl;
         cout << "2. Display Books " << endl;
         cout << "3. Search the book by Title " <<endl;
-        cout << "4. Delete the book by Id "<< endl;
-        cout << "5. Exit " <<endl;
+        cout << "4. Update the book by ID" << endl;
+        cout << "5. Delete the book by Id "<< endl;
+        cout << "6. Exit " <<endl;
 
         cout << "Enter your choice: ";
         cin >> choice;
@@ -85,6 +86,41 @@ int main()
         {
             if(library.empty())
             {
+                cout << "Sorry,No book in Library to update"<<endl;
+                cout << "Come Later" <<endl;
+            }
+
+            else
+            {
+                int updateId;
+                bool found=false;
+
+                cout << "Enter the Book Id to update: "<<endl;
+                cin>>updateId;
+                for(size_t i =0;i<library.size();i++)
+                {
+                    if(library[i].getID()==updateId)
+                    {
+                        cout << "Updating the Book Details......" <<endl;
+                        library[i].updateBook();
+                        rewriteFile(library);
+                        cout<< "Updated the Book Details Successfully!"<<endl;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if(!found)
+                {
+                    cout << "Book with givenID not found" <<endl;
+                }
+            }
+        }
+
+        else if(choice == 5)
+        {
+            if(library.empty())
+            {
                 cout << "Sorry,No book in Library to delete"<<endl;
                 cout << "Come Later" <<endl;
             }
@@ -114,7 +150,7 @@ int main()
                 }
             }
         }
-        else if(choice==5)
+        else if(choice==6)
         {
             cout << "Exiting Library System........" <<endl;
             break;
