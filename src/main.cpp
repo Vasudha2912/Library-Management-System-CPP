@@ -1,8 +1,10 @@
 #include "book.h"
 #include <iostream>
 #include <vector>
+#include <limits>
 using namespace std;
 
+void rewriteFile(const std::vector<Book> &library); //forward declaration
 int main()
 {
     cout<< "Library Management Started" <<endl;
@@ -17,7 +19,8 @@ int main()
         cout << "1. Add Book " << endl;
         cout << "2. Display Books " << endl;
         cout << "3. Search the book by Title " <<endl;
-        cout << "4. Exit " <<endl;
+        cout << "4. Delete the book by Id "<< endl;
+        cout << "5. Exit " <<endl;
 
         cout << "Enter your choice: ";
         cin >> choice;
@@ -58,7 +61,7 @@ int main()
                 bool found= false;
 
                 cout << "Please enter the book title: ";
-                cin.ignore();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin,title);
 
                 for(size_t i=0;i<library.size();i++)
@@ -77,7 +80,41 @@ int main()
                 }
             }
         }
-        else if(choice==4)
+
+        else if(choice == 4)
+        {
+            if(library.empty())
+            {
+                cout << "Sorry,No book in Library to delete"<<endl;
+                cout << "Come Later" <<endl;
+            }
+
+            else{
+                int deleteId;
+                bool found = false;
+
+                cout << "Please enter the book Id to delete: " <<endl;
+                cin>> deleteId;
+
+                for(size_t i=0;i<library.size();i++)
+                {
+                    if(library[i].getID()==deleteId)
+                    {
+                        library.erase(library.begin()+i);
+                        rewriteFile(library);
+                        cout << "Book deleted successfully!" <<endl;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if(!found)
+                {
+                    cout << "Book with givenID not found" <<endl;
+                }
+            }
+        }
+        else if(choice==5)
         {
             cout << "Exiting Library System........" <<endl;
             break;

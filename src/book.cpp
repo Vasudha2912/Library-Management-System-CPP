@@ -31,6 +31,14 @@ string Book::getTitle() const
     return bookTitle;
 }
 
+int Book::getID() const{
+    return bookID;
+}
+
+string Book::getAuthor() const{
+    return bookAuthor;
+}
+
 void Book::saveToFile()
 {
     ofstream outFile("books.txt",ios::app);
@@ -70,6 +78,20 @@ void Book::loadFromFile(vector<Book> &library)
         library.push_back(temp);
     }
     inFile.close();
+}
+
+void rewriteFile(const std::vector<Book> &library)
+{
+    ofstream outFile("books.txt",ios::trunc); //ios::trunc erase old data and write fresh data
+
+    for(size_t i =0;i<library.size();i++)
+    {
+        outFile << library[i].getID() <<endl;
+        outFile << library[i].getTitle() <<endl;
+        outFile << library[i].getAuthor() <<endl;
+    }
+
+    outFile.close();
 }
 
 
