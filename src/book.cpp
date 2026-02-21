@@ -1,5 +1,7 @@
 #include "book.h"
 #include <iostream>
+#include <fstream>
+#include <vector>
 using namespace std;
 
 void Book::addBook()
@@ -24,7 +26,55 @@ void Book::displayBook()
     cout << "Book Author : " << bookAuthor << endl;
 }
 
-string Book::getTitle()
+string Book::getTitle() const
 {
     return bookTitle;
 }
+
+void Book::saveToFile()
+{
+    ofstream outFile("books.txt",ios::app);
+
+    if(outFile.is_open())
+    {
+        outFile << bookID <<endl;
+        outFile << bookTitle <<endl;
+        outFile << bookAuthor << endl;
+        outFile.close();
+    }
+}
+
+void Book::loadFromFile(vector<Book> &library)
+{
+    ifstream inFile("books.txt");
+
+    if(!inFile.is_open())
+    {
+        return; //File doesnt exist
+    }
+
+    while(true)
+    {
+        Book temp;
+
+        //try to read bookid
+        if(!(inFile>>temp.bookID))
+        {
+            break;
+        }
+
+        inFile.ignore();// remove leftover newline
+        getline(inFile, temp.bookTitle);
+        getline(inFile, temp.bookAuthor);
+
+        library.push_back(temp);
+    }
+    inFile.close();
+}
+
+
+
+
+
+
+

@@ -2,6 +2,7 @@
 #define BOOK_H
 
 #include <string>
+#include <vector>
 
 class Book{
     private:
@@ -12,7 +13,9 @@ class Book{
     public:
         void addBook();
         void displayBook();
-        std::string getTitle();
+        std::string getTitle() const;//used const because fucntion doesnot modify the object
+        void saveToFile();
+        static void loadFromFile(std::vector<Book> &library);//used static because it will call before any obejct exists
 };
 
 #endif

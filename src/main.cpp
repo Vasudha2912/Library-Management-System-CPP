@@ -8,6 +8,7 @@ int main()
     cout<< "Library Management Started" <<endl;
 
     vector<Book> library;
+    Book::loadFromFile(library);
     int choice;
 
     while(true)
@@ -26,6 +27,7 @@ int main()
             Book book;
             book.addBook();
             library.push_back(book);
+            book.saveToFile();
 
             cout << "Book is Added" << endl;
         }
