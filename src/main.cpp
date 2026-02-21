@@ -15,7 +15,8 @@ int main()
         cout << "\n------MENU------\n" <<endl;
         cout << "1. Add Book " << endl;
         cout << "2. Display Books " << endl;
-        cout <<"3. Exit " <<endl;
+        cout << "3. Search the book by Title " <<endl;
+        cout << "4. Exit " <<endl;
 
         cout << "Enter your choice: ";
         cin >> choice;
@@ -43,7 +44,38 @@ int main()
             }
         }
 
-        else if(choice==3)
+        else if(choice == 3)
+        {
+            if(library.empty())
+            {
+                cout << "Sorry,No book in Library to search"<<endl;
+                cout << "Come Later" <<endl;
+            }
+            else{
+                string title;
+                bool found= false;
+
+                cout << "Please enter the book title: ";
+                cin.ignore();
+                getline(cin,title);
+
+                for(size_t i=0;i<library.size();i++)
+                {
+                    if(library[i].getTitle()==title)
+                    {
+                        cout << "\n---Book found---\n";
+                        library[i].displayBook();
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found)
+                {
+                    cout << "No book found in the library" <<endl;
+                }
+            }
+        }
+        else if(choice==4)
         {
             cout << "Exiting Library System........" <<endl;
             break;

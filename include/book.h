@@ -12,6 +12,7 @@ class Book{
     public:
         void addBook();
         void displayBook();
+        std::string getTitle();
 };
 
 #endif

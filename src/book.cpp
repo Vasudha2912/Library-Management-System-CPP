@@ -23,3 +23,8 @@ void Book::displayBook()
     cout << "Book Title  : " << bookTitle << endl;
     cout << "Book Author : " << bookAuthor << endl;
 }
+
+string Book::getTitle()
+{
+    return bookTitle;
+}
