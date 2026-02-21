@@ -1,29 +1,27 @@
-#include "book.h"
+#include "library.h"
 #include <iostream>
-#include <vector>
 #include <limits>
+
 using namespace std;
 
-void rewriteFile(const std::vector<Book> &library); //forward declaration
 int main()
 {
-    cout<< "Library Management Started" <<endl;
+    cout << "Library Management System Started" << endl;
 
-    vector<Book> library;
-    Book::loadFromFile(library);
+    Library library;
     int choice;
 
     while(true)
     {
-        cout << "\n------MENU------\n" <<endl;
-        cout << "1. Add Book " << endl;
-        cout << "2. Display Books " << endl;
-        cout << "3. Search the book by Title " <<endl;
-        cout << "4. Update the book by ID" << endl;
-        cout << "5. Delete the book by Id "<< endl;
-        cout << "6. Issue Book" <<endl;
-        cout << "7. Return Book " <<endl;
-        cout << "8. Exit " <<endl;
+        cout << "\n------ MENU ------\n" << endl;
+        cout << "1. Add Book" << endl;
+        cout << "2. Display Books" << endl;
+        cout << "3. Search Book by Title" << endl;
+        cout << "4. Update Book by ID" << endl;
+        cout << "5. Delete Book by ID" << endl;
+        cout << "6. Issue Book" << endl;
+        cout << "7. Return Book" << endl;
+        cout << "8. Exit" << endl;
 
         cout << "Enter your choice: ";
         cin >> choice;
@@ -36,205 +34,42 @@ int main()
             continue;
         }
 
-        if(choice==1)
+        switch(choice)
         {
-            Book book;
-            book.addBook();
-            library.push_back(book);
-            book.saveToFile();
+            case 1:
+                library.addBook();
+                break;
 
-            cout << "Book is Added" << endl;
-        }
-        else if(choice==2)
-        {
-            if(library.empty())
-            {
-                cout << "Sorry,No book in Library"<<endl;
-                cout << "Come Later" <<endl;
-            }
-            else{
-                for(size_t i =0;i<library.size();i++)
-                {
-                    library[i].displayBook();
-                }
-            }
-        }
+            case 2:
+                library.displayBooks();
+                break;
 
-        else if(choice == 3)
-        {
-            if(library.empty())
-            {
-                cout << "Sorry,No book in Library to search"<<endl;
-                cout << "Come Later" <<endl;
-            }
-            else{
-                string title;
-                bool found= false;
+            case 3:
+                library.searchByTitle();
+                break;
 
-                cout << "Please enter the book title: ";
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                getline(cin,title);
+            case 4:
+                library.updateBookByID();
+                break;
 
-                for(size_t i=0;i<library.size();i++)
-                {
-                    if(library[i].getTitle()==title)
-                    {
-                        cout << "\n---Book found---\n";
-                        library[i].displayBook();
-                        found = true;
-                        break;
-                    }
-                }
-                if(!found)
-                {
-                    cout << "No book found in the library" <<endl;
-                }
-            }
-        }
+            case 5:
+                library.deleteBookByID();
+                break;
 
-        else if(choice == 4)
-        {
-            if(library.empty())
-            {
-                cout << "Sorry,No book in Library to update"<<endl;
-                cout << "Come Later" <<endl;
-            }
+            case 6:
+                library.issueBookByID();
+                break;
 
-            else
-            {
-                int updateId;
-                bool found=false;
+            case 7:
+                library.returnBookByID();
+                break;
 
-                cout << "Enter the Book Id to update: "<<endl;
-                cin>>updateId;
-                for(size_t i =0;i<library.size();i++)
-                {
-                    if(library[i].getID()==updateId)
-                    {
-                        cout << "Updating the Book Details......" <<endl;
-                        library[i].updateBook();
-                        rewriteFile(library);
-                        cout<< "Updated the Book Details Successfully!"<<endl;
-                        found = true;
-                        break;
-                    }
-                }
+            case 8:
+                cout << "Exiting Library System..." << endl;
+                return 0;
 
-                if(!found)
-                {
-                    cout << "Book with givenID not found" <<endl;
-                }
-            }
-        }
-
-        else if(choice == 5)
-        {
-            if(library.empty())
-            {
-                cout << "Sorry,No book in Library to delete"<<endl;
-                cout << "Come Later" <<endl;
-            }
-
-            else{
-                int deleteId;
-                bool found = false;
-
-                cout << "Please enter the book Id to delete: " <<endl;
-                cin>> deleteId;
-
-                for(size_t i=0;i<library.size();i++)
-                {
-                    if(library[i].getID()==deleteId)
-                    {
-                        library.erase(library.begin()+i);
-                        rewriteFile(library);
-                        cout << "Book deleted successfully!" <<endl;
-                        found = true;
-                        break;
-                    }
-                }
-
-                if(!found)
-                {
-                    cout << "Book with givenID not found" <<endl;
-                }
-            }
-        }
-
-        else if(choice ==6)
-        {
-            if(library.empty())
-            {
-                cout << "Sorry,No book in Library to issue"<<endl;
-                cout << "Come Later" <<endl;
-            }
-
-            else{
-                int issueId;
-                bool found = false;
-
-                cout << "Please enter the book Id : " <<endl;
-                cin>> issueId;
-
-                for(size_t i=0;i<library.size();i++)
-                {
-                    if(library[i].getID()==issueId)
-                    {
-                        library[i].issueBook();
-                        rewriteFile(library);
-                        found = true;
-                        break;
-                    }
-                }
-
-                if(!found)
-                {
-                    cout << "Book with givenID not found" <<endl;
-                }
-            }
-        }
-
-        else if(choice ==7)
-        {
-            if(library.empty())
-            {
-                cout << "Sorry,No book in Library to return"<<endl;
-                cout << "Come Later" <<endl;
-            }
-
-            else{
-                int returnId;
-                bool found = false;
-
-                cout << "Please enter the book Id : " <<endl;
-                cin>> returnId;
-
-                for(size_t i=0;i<library.size();i++)
-                {
-                    if(library[i].getID()==returnId)
-                    {
-                        library[i].returnBook();
-                        rewriteFile(library);
-                        found = true;
-                        break;
-                    }
-                }
-
-                if(!found)
-                {
-                    cout << "Book with givenID not found" <<endl;
-                }
-            }
-        }
-        else if(choice==8)
-        {
-            cout << "Exiting Library System........" <<endl;
-            break;
-        }
-
-        else{
-            cout << "Invalid Choice...Please try again" <<endl;
+            default:
+                cout << "Invalid choice! Try again." << endl;
         }
     }
-    return 0;
 }

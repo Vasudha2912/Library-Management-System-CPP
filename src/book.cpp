@@ -49,7 +49,7 @@ void Book::addBook()
     issuedDate = "";
 }
 
-void Book::displayBook()
+void Book::displayBook() const
 {
     cout<< "\n---------------Book Details---------------\n";
     cout<<  "Book ID     : " << bookID << endl;
