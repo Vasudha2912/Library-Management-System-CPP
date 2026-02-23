@@ -14,6 +14,12 @@ void Library::addBook()
 {
     Book book;
     book.addBook();
+
+    if(isDuplicateID(book.getID()))
+    {
+        std::cout << "Error: Book with this ID already exists" <<std::endl;
+        return;
+    }
     books.push_back(book);
     book.saveToFile();
 
@@ -172,4 +178,16 @@ void Library::returnBookByID()
     }
 
     std::cout << "Book with given ID not found." << std::endl;
+}
+
+bool Library::isDuplicateID(int id) const
+{
+    for(size_t i=0;i<books.size();i++)
+    {
+        if(books[i].getID()==id)
+        {
+            return true;
+        }
+    }
+    return false;
 }

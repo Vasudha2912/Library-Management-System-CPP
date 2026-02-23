@@ -19,6 +19,7 @@ public:
     void deleteBookByID();
     void issueBookByID();
     void returnBookByID();
+    bool isDuplicateID(int id) const;
 };
 
 #endif
